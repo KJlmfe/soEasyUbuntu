@@ -53,7 +53,7 @@ function get_fast_mirror()
 function backup_sources()
 {
     echo -e "Backup your sources.list.\n"
-    sudo mv /etc/apt/sources.list /etc/apt/sources.list.`date +%Y-%m-%d-%k:%M:%S`
+    sudo mv /etc/apt/sources.list /etc/apt/sources.list.`date +%F-%R:%S`
 }
 
 function update_sources()
