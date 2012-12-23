@@ -1,0 +1,3 @@
+使用Ubuntu自带的Startup Application软件 添加一个脚本启动项
+命令如下:
+bash /home/kjlmfe/Dropbox/soEasyUbuntu/AutoStartup/startup.sh

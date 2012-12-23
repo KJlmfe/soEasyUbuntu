@@ -1,0 +1,82 @@
+#!/bin/bash
+
+#settings:
+netspeed=true
+ram=true
+cpu=true
+#-------------------------------------------------------
+
+
+#---------------- initialize ---------------------------
+rm /tmp/.sysmon > /dev/null 2>&1
+dstat --net --mem --cpu --output=/tmp/.sysmon 1 1 > /dev/null 2>&1
+
+#----------- up/down speed -----------------------------
+if [ $netspeed = true ]; then
+
+upspeed=$(echo $(cat /tmp/.sysmon | tail -1 | cut -d ',' -f2)/1024 | bc)
+
+upkbmb=$(if [ $upspeed -gt 1024 ]; then 
+		up1=$(echo $(cat /tmp/.sysmon | tail -1 | cut -d ',' -f2)/1024/1024 | bc -l)
+		echo $up1 | head -c 4
+	elif [ $upspeed -lt 10 ]; then 
+		echo 0$upspeed | head -c 3
+	else
+		echo $upspeed | head -c 3
+	fi)
+
+downspeed=$(echo $(cat /tmp/.sysmon | tail -1 | cut -d ',' -f1)/1024 | bc)
+
+downkbmb=$(if [ $downspeed -gt 1024 ]; then 
+		down1=$(echo $(cat /tmp/.sysmon | tail -1 | cut -d ',' -f1)/1024/1024 | bc -l)
+		echo $down1 | head -c 4
+	elif [ $downspeed -lt 10 ]; then
+		echo 00$downspeed
+	else
+		echo 0$downspeed
+	fi)
+#---------------- up/down speed unit --------------------
+upunit=$(if [ $upspeed -gt 1024 ]; then echo "M/s"; else echo "K/s"; fi)
+downunit=$(if [ $downspeed -gt 1024 ]; then echo "M/s"; else echo "K/s"; fi)
+
+fi
+
+
+
+#------------------- CPU % used -------------------------
+if [ $cpu = true ]; then
+
+cpufree=$(cat /tmp/.sysmon | tail -1 | cut -d ',' -f9)
+cpuused=$(echo 100-$cpufree | bc | sed -e 's/\..*//')
+cpuecho=$(if [ $cpuused -lt 10 ]; then
+		echo 0$cpuused
+	elif [ $cpuused -gt 9 ]; then
+		echo $cpuused
+	else
+		echo 00
+	fi)
+
+fi
+
+
+
+#------------------- RAM % used --------------------------
+if [ $ram = true ]; then
+
+memused=$(free -m | grep buffers/cache | tr -s ' ' | cut -d' ' -f 3)
+memfree=$(free -m | grep buffers/cache | tr -s ' ' | cut -d' ' -f 4)
+memtotal=$(echo $memused+$memfree | bc -l)
+
+memusedpercent=$(echo 100-100*$memfree/$memtotal | bc)
+
+memecho=$(if [ $memusedpercent -lt 10 ]; then
+		echo 0$memusedpercent
+	else
+		echo $memusedpercent
+	fi)
+fi
+
+c=$(acpi -t | cut -d ' ' -f 4)
+
+#------------------ The Indicator Sysmonitor actual output -
+echo $(if [ $cpu = true ]; then echo C $cpuecho% ; fi) " " $(if [ $ram = true ]; then echo M $memecho% ; fi) $(if [ $netspeed = true ]; then echo ↑ $upkbmb $upunit  ↓ $downkbmb $downunit; fi) " " $c℃

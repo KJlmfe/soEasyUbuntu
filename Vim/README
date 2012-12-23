@@ -1,0 +1,2 @@
+#为了让Vim 的"+y "+p 好使 需要安装这个
+sudo apt-get install vim-gnome

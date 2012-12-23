@@ -1,0 +1,7 @@
+开启mod_rewrite
+
+sudo a2enmod rewrite
+
+重启apache
+
+sudo service apache2 restart

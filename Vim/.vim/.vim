@@ -1,0 +1,1 @@
+/home/kjlmfe/Dropbox/soEasyUbuntu/Vim/.vim
