@@ -1,3 +1,39 @@
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+
+" original repos on github
+Bundle "scrooloose/nerdtree"
+
+" vim-scripts repos
+Bundle 'taglist.vim'
+Bundle 'vim-javascript'
+
+
+" non github repos
+"Bundle 'git://git.wincent.com/command-t.git'
+" ...
+
+filetype plugin indent on     " required!
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
+ 
+
 set nu                   "显示行号
 syntax on                "开启语法高亮
 colorscheme koehler       "设置颜色主题
