@@ -9,4 +9,7 @@ alias myip="ifconfig eth0 | grep 'inet addr' | sed 's/^.*inet addr://g'| cut -d 
 
 w="/home/kjlmfe/Dropbox/www"
 
+#开启bash兼容vi模式
+set -o vi
+
 
