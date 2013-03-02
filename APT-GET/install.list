@@ -2,3 +2,9 @@ qq
 sudo add-apt-repository ppa:nvbn-rm/ppa
 sudo apt-get update
 sudo apt-get install everpad
+
+#用hjkl移动光标
+sudo apt-get install keynav
+
+#Vim的taglist插件需要调用它
+sudo apt-get install exuberant-ctags 

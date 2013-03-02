@@ -1,4 +1,4 @@
-set nocompatible               " be iMproved
+set nocompatible               " be iMproved 关闭Vi兼容模式
 filetype off                   " required!
 
 set rtp+=~/.vim/bundle/vundle/
@@ -12,11 +12,12 @@ Bundle 'gmarik/vundle'
 
 " original repos on github
 Bundle "scrooloose/nerdtree"
+Bundle "skammer/vim-css-color"
 
 " vim-scripts repos
 Bundle 'taglist.vim'
 Bundle 'vim-javascript'
-
+Bundle 'OmniCppComplete'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -38,11 +39,12 @@ set nu                   "显示行号
 syntax on                "开启语法高亮
 colorscheme koehler       "设置颜色主题
 set cursorline           "突出显示当前行
-set autoindent           "自动缩进
+set autoindent           "自动缩进  所谓的缩排，就是当你按下Enter编辑新的一行时，游标不会在行首，而是在与上一行的第一个非空白字元处对齐！
 set cindent
 set tabstop=4            "设置tab长度为4
 set ruler                "打开状态栏标尺
 set showcmd              "在状态栏显示当前输入的命令
+set showmode			 "显示INSERT NORMAL等
 set incsearch            "输入搜索内容时 动态的显示搜索结果
 set hlsearch             "搜索内容高亮显示
 set mouse=a              "让vim支持鼠标
@@ -59,17 +61,56 @@ set foldmethod=indent    "自动折叠?
 
 filetype plugin on       "根据文件类型启用不同的插件 主要用于NERDComment插件根据不同的文件类型，注释的符号不一样
 
-map <F2> :NERDTreeToggle<CR>          "映射F2打开/关闭NERDtree插件
-imap <F2> <ESC>:NERDTreeToggle<CR>    
 
 map <F3> :TlistToggle<CR>             "映射F3打开/关闭TagList插件
 imap <F3> <ESC>:TlistToggle<CR>       
 
-let g:miniBufExplMapWindowNavVim = 1  "用<C-h,j,k,l>切换到上下左右的窗口中去
-let NERDTreeShowHidden = 1
+"let g:miniBufExplMapWindowNavVim = 1  "用<C-h,j,k,l>切换到上下左右的窗口中去
 
 "单个文件编译
 set makeprg=gcc\ -Wall\ -g\ -o\ %<\ %
 imap <F5> <ESC>:w<CR>:make<CR>:cw<CR>
 map <F5> :w<CR>:make<CR>:cw<CR>
 
+
+let g:cssColorVimDoNotMessMyUpdatetime = 1 "g:cssColorVimDoNotMessMyUpdatetime is used when updatetime value set by plugin (100ms) is interfering with your configuration.
+
+"NERDTree"
+"映射F2打开/关闭NERDtree插件
+map <F2> :NERDTreeToggle<CR>
+imap <F2> <ESC>:NERDTreeToggle<CR>    
+
+let NERDTreeShowHidden = 1
+let NERDTreeShowBookmarks = 1   "Tells the NERD tree whether to display the bookmarks table on startup.
+let NERDTreeShowLineNumbers = 1 "Tells the NERD tree whether to display line numbers in the tree window.
+let NERDTreeWinSize = 33   "Sets the window size when the NERD tree is opened.
+let NERDTreeMinimalUI = 1 "Disables display of the 'Bookmarks' label and 'Press ? for help' text.
+
+
+"taglist
+map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+imap <F12> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
+let Tlist_Show_One_File = 1     "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow = 1   "如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Use_Right_Window = 1  "在右侧窗口中显示taglist窗口
+
+
+" Omni Complete 自动补全
+
+"打开自动补全 向下选择
+inoremap <expr> <C-J>      pumvisible()?"\<C-N>":"\<C-X><C-O>"  
+"向上
+inoremap <expr> <C-K>      pumvisible()?"\<C-P>":"\<C-K>"
+"确认选择
+inoremap <expr> <C-L>       pumvisible()?"\<C-Y>":"\<CR>"
+"取消
+inoremap <expr> <C-H>      pumvisible()?"\<C-E>":"\<C-L>" 
+
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType c set omnifunc=ccomplete#Complete
