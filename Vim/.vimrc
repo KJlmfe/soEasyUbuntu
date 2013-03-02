@@ -12,7 +12,10 @@ Bundle 'gmarik/vundle'
 
 " original repos on github
 Bundle "scrooloose/nerdtree"
+Bundle "scrooloose/nerdcommenter"
 Bundle "skammer/vim-css-color"
+Bundle "Yggdroot/indentLine"
+Bundle 'KJlmfe/Conque-Shell'
 
 " vim-scripts repos
 Bundle 'taglist.vim'
@@ -34,14 +37,15 @@ filetype plugin indent on     " required!
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
  
-
 set nu                   "显示行号
 syntax on                "开启语法高亮
-colorscheme koehler       "设置颜色主题
+colorscheme koehler      "设置颜色主题
 set cursorline           "突出显示当前行
 set autoindent           "自动缩进  所谓的缩排，就是当你按下Enter编辑新的一行时，游标不会在行首，而是在与上一行的第一个非空白字元处对齐！
 set cindent
+set shiftwidth=4
 set tabstop=4            "设置tab长度为4
+set expandtab			 "tab用空格代替
 set ruler                "打开状态栏标尺
 set showcmd              "在状态栏显示当前输入的命令
 set showmode			 "显示INSERT NORMAL等
@@ -57,7 +61,7 @@ set list                 "tab键显示为|
 set listchars=tab:\|\ 
 
 set foldenable           "允许折叠
-set foldmethod=indent    "自动折叠?
+set foldmethod=manual    "自动折叠?
 
 filetype plugin on       "根据文件类型启用不同的插件 主要用于NERDComment插件根据不同的文件类型，注释的符号不一样
 
@@ -114,3 +118,6 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType c set omnifunc=ccomplete#Complete
+
+
+
