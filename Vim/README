@@ -1,2 +1,4 @@
 #为了让Vim 的"+y "+p 好使 需要安装这个
 sudo apt-get install vim-gnome
+#powerline插件需要才能显示出> <等图形
+Just put Monaco_Linux-Powerline.ttf into your ~/.fonts dir and run fc-cache -vf

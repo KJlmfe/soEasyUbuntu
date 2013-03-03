@@ -1,4 +1,4 @@
-set nocompatible               " be iMproved 关闭Vi兼容模式
+set nocompatible               " be iMproved 关闭Vi兼容模式 must be first line
 filetype off                   " required!
 
 set rtp+=~/.vim/bundle/vundle/
@@ -15,7 +15,8 @@ Bundle "scrooloose/nerdtree"
 Bundle "scrooloose/nerdcommenter"
 Bundle "skammer/vim-css-color"
 Bundle "Yggdroot/indentLine"
-Bundle 'KJlmfe/Conque-Shell'
+Bundle "KJlmfe/Conque-Shell"
+Bundle "Lokaltog/vim-powerline"
 
 " vim-scripts repos
 Bundle 'taglist.vim'
@@ -45,6 +46,7 @@ set autoindent           "自动缩进  所谓的缩排，就是当你按下Ente
 set cindent
 set shiftwidth=4
 set tabstop=4            "设置tab长度为4
+set softtabstop=4 				" let backspace delete indent
 set expandtab			 "tab用空格代替
 set ruler                "打开状态栏标尺
 set showcmd              "在状态栏显示当前输入的命令
@@ -54,17 +56,20 @@ set hlsearch             "搜索内容高亮显示
 set mouse=a              "让vim支持鼠标
 set encoding=utf-8       "vim的内部编码
 set fileencoding=utf-8   "新建一个文件时，默认采用的编码
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1 
-                         "设置打开一个文件时候，猜测的文件编码列表 按照顺序来猜测
-
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1 "设置打开一个文件时候，猜测的文件编码列表 按照顺序来猜测
 set list                 "tab键显示为|
 set listchars=tab:\|\ 
-
 set foldenable           "允许折叠
 set foldmethod=manual    "自动折叠?
+set history=1000                " Store a ton of history (default is 20)
+    
+" Easier moving in tabs and windows
+	map wj <C-W>j
+	map wk <C-W>k
+	map wl <C-W>l
+	map wh <C-W>h
 
 filetype plugin on       "根据文件类型启用不同的插件 主要用于NERDComment插件根据不同的文件类型，注释的符号不一样
-
 
 map <F3> :TlistToggle<CR>             "映射F3打开/关闭TagList插件
 imap <F3> <ESC>:TlistToggle<CR>       
@@ -92,6 +97,9 @@ let NERDTreeMinimalUI = 1 "Disables display of the 'Bookmarks' label and 'Press 
 
 
 "taglist
+"This will look in the current directory for 'tags', and work up the tree towards root until one is found. 
+set tags=./tags;/,$HOME/vimtags
+
 map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 imap <F12> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
@@ -119,5 +127,7 @@ autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType c set omnifunc=ccomplete#Complete
 
-
-
+"vim-powerline
+set laststatus=2   " Always show the statusline
+set t_Co=256 " Explicitly tell Vim that the terminal supports 256 colors
+let g:Powerline_symbols = 'fancy'  "Custom icons and arrows. Requires a patched font.
