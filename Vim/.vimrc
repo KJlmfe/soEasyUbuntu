@@ -13,10 +13,12 @@ Bundle 'gmarik/vundle'
 " original repos on github
 Bundle "scrooloose/nerdtree"
 Bundle "scrooloose/nerdcommenter"
+Bundle "scrooloose/syntastic"
 Bundle "skammer/vim-css-color"
 Bundle "Yggdroot/indentLine"
 Bundle "KJlmfe/Conque-Shell"
 Bundle "Lokaltog/vim-powerline"
+Bundle "SirVer/ultisnips"
 
 " vim-scripts repos
 Bundle 'taglist.vim'
@@ -60,7 +62,7 @@ set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1 "设置�
 set list                 "tab键显示为|
 set listchars=tab:\|\ 
 set foldenable           "允许折叠
-set foldmethod=manual    "自动折叠?
+set foldmethod=syntax    "自动折叠?
 set history=1000                " Store a ton of history (default is 20)
     
 " Easier moving in tabs and windows
@@ -131,3 +133,16 @@ autocmd FileType c set omnifunc=ccomplete#Complete
 set laststatus=2   " Always show the statusline
 set t_Co=256 " Explicitly tell Vim that the terminal supports 256 colors
 let g:Powerline_symbols = 'fancy'  "Custom icons and arrows. Requires a patched font.
+
+" syntastic
+let g:syntastic_auto_jump=1
+let g:syntastic_check_on_open = 1
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_loc_list_height = 6
+let g:syntastic_enable_highlighting = 0
+
+"javascript
+let b:javascript_fold=1 " 打开javascript折叠
+let javascript_enable_domhtmlcss=1 " 打开javascript对dom、html和css的支持

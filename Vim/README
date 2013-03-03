@@ -2,3 +2,7 @@
 sudo apt-get install vim-gnome
 #powerline插件需要才能显示出> <等图形
 Just put Monaco_Linux-Powerline.ttf into your ~/.fonts dir and run fc-cache -vf
+#检查js语法需要
+sudo apt-get install nodejs
+sudo apt-get install npm
+sudo npm install jshint -g
