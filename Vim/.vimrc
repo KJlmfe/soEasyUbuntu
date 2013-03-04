@@ -19,11 +19,12 @@ Bundle "Yggdroot/indentLine"
 Bundle "KJlmfe/Conque-Shell"
 Bundle "Lokaltog/vim-powerline"
 Bundle "SirVer/ultisnips"
+Bundle "Shougo/neocomplcache"
 
 " vim-scripts repos
 Bundle 'taglist.vim'
 Bundle 'vim-javascript'
-Bundle 'OmniCppComplete'
+"Bundle 'OmniCppComplete'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -63,13 +64,13 @@ set list                 "tab键显示为|
 set listchars=tab:\|\ 
 set foldenable           "允许折叠
 set foldmethod=syntax    "自动折叠?
-set history=1000                " Store a ton of history (default is 20)
+set history=100          " Store a ton of history (default is 20)
     
 " Easier moving in tabs and windows
-	map wj <C-W>j
-	map wk <C-W>k
-	map wl <C-W>l
-	map wh <C-W>h
+map wj <C-W>j
+map wk <C-W>k
+map wl <C-W>l
+map wh <C-W>h
 
 filetype plugin on       "根据文件类型启用不同的插件 主要用于NERDComment插件根据不同的文件类型，注释的符号不一样
 
@@ -82,7 +83,6 @@ imap <F3> <ESC>:TlistToggle<CR>
 set makeprg=gcc\ -Wall\ -g\ -o\ %<\ %
 imap <F5> <ESC>:w<CR>:make<CR>:cw<CR>
 map <F5> :w<CR>:make<CR>:cw<CR>
-
 
 let g:cssColorVimDoNotMessMyUpdatetime = 1 "g:cssColorVimDoNotMessMyUpdatetime is used when updatetime value set by plugin (100ms) is interfering with your configuration.
 
@@ -97,7 +97,6 @@ let NERDTreeShowLineNumbers = 1 "Tells the NERD tree whether to display line num
 let NERDTreeWinSize = 33   "Sets the window size when the NERD tree is opened.
 let NERDTreeMinimalUI = 1 "Disables display of the 'Bookmarks' label and 'Press ? for help' text.
 
-
 "taglist
 "This will look in the current directory for 'tags', and work up the tree towards root until one is found. 
 set tags=./tags;/,$HOME/vimtags
@@ -108,26 +107,6 @@ imap <F12> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 let Tlist_Show_One_File = 1     "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1   "如果taglist窗口是最后一个窗口，则退出vim
 let Tlist_Use_Right_Window = 1  "在右侧窗口中显示taglist窗口
-
-
-" Omni Complete 自动补全
-
-"打开自动补全 向下选择
-inoremap <expr> <C-J>      pumvisible()?"\<C-N>":"\<C-X><C-O>"  
-"向上
-inoremap <expr> <C-K>      pumvisible()?"\<C-P>":"\<C-K>"
-"确认选择
-inoremap <expr> <C-L>       pumvisible()?"\<C-Y>":"\<CR>"
-"取消
-inoremap <expr> <C-H>      pumvisible()?"\<C-E>":"\<C-L>" 
-
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType c set omnifunc=ccomplete#Complete
 
 "vim-powerline
 set laststatus=2   " Always show the statusline
@@ -146,3 +125,44 @@ let g:syntastic_enable_highlighting = 0
 "javascript
 let b:javascript_fold=1 " 打开javascript折叠
 let javascript_enable_domhtmlcss=1 " 打开javascript对dom、html和css的支持
+
+"neocomplcache
+
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+" Enable heavy features.
+" Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+let g:neocomplcache_enable_underbar_completion = 1
+
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
